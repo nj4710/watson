@@ -2,31 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Watson Speech to Text client example</title>
+    <title>Emitra</title>
+    <link rel="stylesheet" type="text/css" href="emitra_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
-<body>
-
-<section>
-    <h2>Press the 'mic' button and speak</h2>
-    <button id="button">mic</button>
-    <p id="recognizedText"></p>
-</section>
-
 <script src="speech.js"></script>
-<h3>Code for this demo:</h3>
 
-<pre><code><script style="display: block;">
+<script>
     var speech = SpeechToText;
     var activeSTT;
+   
+   
 
-    function listen() {
+    function listen(nowId) {
+        console.log(nowId)
         activeSTT = speech.listen({
             onStart: function() {
                 console.log('onStart Speech event');
             },
             onResult: function(e) {
                 console.log('onResult Speech event', e.text);
-                document.getElementById("recognizedText").innerHTML = e.text;
+                // console.log(nowID);
+                document.getElementById(nowId).value = e.text.replace(/ /g,'');
                 if (e.isFinal) {
                     stopListening();
                 }
@@ -41,11 +39,11 @@
         });
     }
 
-    function startListening() {
+    function startListening(id) {
         if (activeSTT) {
             // do nothing, speech is active
         } else if (speech.isSupported) {
-            listen();
+            listen(id);
         } else {
             alert('speech not supported by this browser');
         }
@@ -57,10 +55,66 @@
             activeSTT = null;
         }
     }
+    function myFunction(identity)
+    {
+       
+       var sendingname = (identity.id);
+        startListening(sendingname);
 
-    document.querySelector('#button').onclick = startListening;
+       
+    }
+    function stopOnBlurr()
+    {
+        stopListening();
+        
+    }
+    function checkResult(text)
+    {
+        if(text==='YES')
+        {
+            //DO DOMETHING
+        }
+        else 
+        {
+            //DO SOMETHING
+        }
+    }  
 
-</script></code></pre>
+</script>
+
+<body>
+<div class="main-form">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12 pd">
+            <div class="form-box box-shadow">
+               <div class="form-here text-center">
+                 
+                  <div class="photo">
+                     <img src="emitra.jpg" class="box-shadow img-rounded image-size" alt="Image">
+                  </div>
+        
+                  <form action="http://localhost:3000/backend" method="post">
+                    
+                        <input placeholder="KNO Number" name="kno" type="text" class="form-control mrb" id="testID" onfocus="myFunction(testID)" onblur="stopOnBlurr()" autofocus  required>
+                    
+                        <input placeholder="Email" name="email" type="text" class="form-control mrb" id="testID2" onfocus="myFunction(testID2)" onblur="stopOnBlurr()"  required>
+                       
+                    
+                        <input placeholder="Phone No." name="phone" type="text" class="form-control mrb" id="testID3" onfocus="myFunction(testID3)" onblur="stopOnBlurr()" >
+                       
+                    
+                     <input type="submit" class="btn btn-block"></input>
+                      
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
 
 </body>
 </html>

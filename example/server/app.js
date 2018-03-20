@@ -6,6 +6,8 @@ const path = require('path');
 const logger = require('morgan');
 const port = process.env.PORT || 3000;
 const app = express();
+const say = require('say');
+
 
 app.use(compression());
 app.set('port', port);
@@ -14,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, 'public')));
 app.use('/api/speech-to-text/', require('./stt-token.js'));
+app.use('/', require('./routes'));
 
 app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));
@@ -32,3 +35,6 @@ if (!process.env.VCAP_APP_PORT) {
     console.log('Secure server live at https://localhost:%s/', HTTPS_PORT);
   });
 }
+
+
+module.exports = app;
