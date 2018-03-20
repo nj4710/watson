@@ -58,6 +58,29 @@
     function myFunction(identity)
     {
        
+       var checkingon = (identity.id);
+       var check = checkingon.charAt(checkingon.length-1);
+
+       //console.log("check:"+check);
+       if(check==='1')
+       {
+
+            var msg = new SpeechSynthesisUtterance('Please Enter Your K N O Number');
+       }
+       else if (check==='2')
+       {
+
+            var msg = new SpeechSynthesisUtterance('Please Enter Your Email ID');
+       }
+       else 
+       {
+
+            var msg = new SpeechSynthesisUtterance('PLease Enter Your Phone Number');
+       }
+
+            window.speechSynthesis.speak(msg);
+
+
        var sendingname = (identity.id);
         startListening(sendingname);
 
@@ -96,7 +119,7 @@
         
                   <form action="http://localhost:3000/backend" method="post">
                     
-                        <input placeholder="KNO Number" name="kno" type="text" class="form-control mrb" id="testID" onfocus="myFunction(testID)" onblur="stopOnBlurr()" autofocus  required>
+                        <input placeholder="KNO Number" name="kno" type="text" class="form-control mrb" id="testID1" onfocus="myFunction(testID1)" onblur="stopOnBlurr()" autofocus  required>
                     
                         <input placeholder="Email" name="email" type="text" class="form-control mrb" id="testID2" onfocus="myFunction(testID2)" onblur="stopOnBlurr()"  required>
                        
